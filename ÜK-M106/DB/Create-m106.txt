@@ -1,0 +1,170 @@
+
+USE [m106]
+GO
+/****** Object:  Schema [intern]    Script Date: 09.01.2025 08:59:55 ******/
+CREATE SCHEMA [intern]
+GO
+/****** Object:  Schema [verkauf]    Script Date: 09.01.2025 08:59:55 ******/
+CREATE SCHEMA [verkauf]
+GO
+/****** Object:  Table [intern].[lohnkonto]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [intern].[lohnkonto](
+	[kontoid] [int] IDENTITY(1,1) NOT NULL,
+	[iban] [varchar](20) NOT NULL,
+	[mitarbeiterid] [int] NOT NULL,
+	[gueltigab] [date] NOT NULL,
+	[gueltigbis] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[kontoid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [intern].[mitarbeiter]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [intern].[mitarbeiter](
+	[mitarbeiterid] [int] IDENTITY(1,1) NOT NULL,
+	[vorname] [nvarchar](50) NULL,
+	[nachname] [nvarchar](50) NOT NULL,
+	[geschlecht] [char](1) NULL,
+	[geburtsdatum] [date] NOT NULL,
+	[anstellungsdatum] [date] NULL,
+	[email] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[mitarbeiterid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [verkauf].[bestellpositionen]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [verkauf].[bestellpositionen](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[bestellid] [int] NOT NULL,
+	[produktid] [int] NOT NULL,
+	[menge] [int] NOT NULL,
+	[rabatt] [tinyint] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [verkauf].[bestellungen]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [verkauf].[bestellungen](
+	[bestellid] [int] IDENTITY(1,1) NOT NULL,
+	[bestelldatum] [datetime] NULL,
+	[kundenid] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[bestellid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [verkauf].[kunden]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [verkauf].[kunden](
+	[kundenid] [int] IDENTITY(1,1) NOT NULL,
+	[vorname] [varchar](50) NULL,
+	[nachname] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[kundenid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [verkauf].[produkte]    Script Date: 09.01.2025 08:59:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [verkauf].[produkte](
+	[produktid] [int] IDENTITY(1,1) NOT NULL,
+	[produktname] [varchar](100) NULL,
+	[preis] [money] NULL,
+	[energielabel] [char](1) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[produktid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [verkauf].[bestellungen] ON 
+GO
+INSERT [verkauf].[bestellungen] ([bestellid], [bestelldatum], [kundenid]) VALUES (1, CAST(N'2023-09-10T11:20:07.000' AS DateTime), 1)
+GO
+INSERT [verkauf].[bestellungen] ([bestellid], [bestelldatum], [kundenid]) VALUES (2, CAST(N'2023-11-05T17:43:13.000' AS DateTime), 2)
+GO
+INSERT [verkauf].[bestellungen] ([bestellid], [bestelldatum], [kundenid]) VALUES (3, CAST(N'2023-12-27T09:32:55.000' AS DateTime), 4)
+GO
+SET IDENTITY_INSERT [verkauf].[bestellungen] OFF
+GO
+SET IDENTITY_INSERT [verkauf].[kunden] ON 
+GO
+INSERT [verkauf].[kunden] ([kundenid], [vorname], [nachname]) VALUES (1, N'Hans', N'Meyer')
+GO
+INSERT [verkauf].[kunden] ([kundenid], [vorname], [nachname]) VALUES (2, N'Pete', N'Muller')
+GO
+INSERT [verkauf].[kunden] ([kundenid], [vorname], [nachname]) VALUES (3, N'unbekannt', N'Matter')
+GO
+INSERT [verkauf].[kunden] ([kundenid], [vorname], [nachname]) VALUES (4, N'Bruno', N'Moser')
+GO
+INSERT [verkauf].[kunden] ([kundenid], [vorname], [nachname]) VALUES (5, N'Heinz', N'Manser')
+GO
+SET IDENTITY_INSERT [verkauf].[kunden] OFF
+GO
+SET IDENTITY_INSERT [verkauf].[produkte] ON 
+GO
+INSERT [verkauf].[produkte] ([produktid], [produktname], [preis], [energielabel]) VALUES (1, N'Zitronenpresse', 4.9000, N'A')
+GO
+INSERT [verkauf].[produkte] ([produktid], [produktname], [preis], [energielabel]) VALUES (2, N'Gartenlounge', 224.0000, NULL)
+GO
+INSERT [verkauf].[produkte] ([produktid], [produktname], [preis], [energielabel]) VALUES (4, N'Weinkühlschrank', 139.0000, N'C')
+GO
+SET IDENTITY_INSERT [verkauf].[produkte] OFF
+GO
+ALTER TABLE [intern].[lohnkonto] ADD  DEFAULT ('99991231') FOR [gueltigbis]
+GO
+ALTER TABLE [verkauf].[kunden] ADD  DEFAULT ('unbekannt') FOR [vorname]
+GO
+ALTER TABLE [intern].[lohnkonto]  WITH CHECK ADD FOREIGN KEY([mitarbeiterid])
+REFERENCES [intern].[mitarbeiter] ([mitarbeiterid])
+GO
+ALTER TABLE [verkauf].[bestellpositionen]  WITH CHECK ADD FOREIGN KEY([bestellid])
+REFERENCES [verkauf].[bestellungen] ([bestellid])
+GO
+ALTER TABLE [verkauf].[bestellpositionen]  WITH CHECK ADD  CONSTRAINT [fk_bestellpos_produktid] FOREIGN KEY([produktid])
+REFERENCES [verkauf].[produkte] ([produktid])
+GO
+ALTER TABLE [verkauf].[bestellpositionen] CHECK CONSTRAINT [fk_bestellpos_produktid]
+GO
+ALTER TABLE [verkauf].[bestellungen]  WITH CHECK ADD FOREIGN KEY([kundenid])
+REFERENCES [verkauf].[kunden] ([kundenid])
+GO
+ALTER TABLE [intern].[mitarbeiter]  WITH CHECK ADD CHECK  (([geschlecht]='n' OR [geschlecht]='w' OR [geschlecht]='m'))
+GO
+ALTER TABLE [verkauf].[bestellungen]  WITH CHECK ADD CHECK  (([bestelldatum]>'20191231'))
+GO
+ALTER TABLE [verkauf].[produkte]  WITH CHECK ADD CHECK  (([energielabel]='E' OR [energielabel]='D' OR [energielabel]='C' OR [energielabel]='B' OR [energielabel]='A'))
+GO
+USE [master]
+GO
+ALTER DATABASE [m106] SET  READ_WRITE 
+GO
